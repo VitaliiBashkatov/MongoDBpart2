@@ -1,80 +1,56 @@
-# mongo-homework
+### Pre-requisites
+* git - [Installation guide](https://www.linode.com/docs/development/version-control/how-to-install-git-on-linux-mac-and-windows/) .  
+* node.js - [Download page](https://nodejs.org/en/download/) .  
+* npm - comes with node or download yarn - [Download page](https://yarnpkg.com/lang/en/docs/install) .  
+* mongodb - [Download page](https://www.mongodb.com/download-center/community) .  
+* postman - [Download page](https://www.getpostman.com/downloads/)
+* mongoose - [Api](https://mongoosejs.com/docs/api.html)
+* MongoDB - [CRUD API](https://docs.mongodb.com/manual/crud/index.html)
 
-### Installation
-1. Clone repo
-2. Open project directory
-3. run ```npm install``` command
-3. run ```npm start``` command
+### Installation 
+``` 
+git clone https://github.com/vdanyliv/mongo-workshop/
+cd mongo-workshop
+cp .env.example .env
+npm install
+npm run init-users
+npm run server
+```
+### Workshop plan
+Lets try to implement possibility to create users articles, for that we need to implement CRUD operations.
 
-### Task
+#### 1. User will call POST /atricles - to create new article
+  * Create Schema and Model for articles
+  * Add owner path to article schema
+  * Add schema validation
+  * Before creating new article need to check if item and user already exist (search by title)
 
-1. Implement CRUD for users
-  - 1.1 Use already created empty user schema, model, controller, route as example
-
-#### User Schema
-
+##### Articles schema
 ```
 {
-  firstName: type string, min length 4, max length 50, required field,
-  lastName: type string, min length 3, max length 60, required field
-  role: type string, only valid values is [admin, writer, guest],
-  createdAt: type Datetime, with default value,
-  numberOfArticles: type number, default value 0, not required,
-  nickname: type string, not required
+  title: String,
+  description: String,
+  owner: ObjectId,
+  createdAt: Date,
+  updatedAt: Date
 }
 ```
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/users (POST)**, I want to create new user document,
-so that I can have possibility to find it in mongodb users collection
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/users/:userId (PUT)**, I want to have possibility 
-to edit required user document fields, so that I will have possibility to easily update general user information
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/users/:userId (GET)**, I want to have possibility
-to get information about any user just by passing specific user mongo id as an api parametr.
-(Response also should contain all articles that user created)
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/users/:userId (DELETE)**, I want to have possibility
-to remove specific user from mongodb and all articles that he created.
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/users/:userId/articles (GET)**, I want to have possibility
-to get all articles that created by specific user.
-
-
-2. Implement CRUD for articles
-  - 2.1 Create schema, model, controller, routes
-
-#### Article Schema
-
-```
-{
-  title: type string, min length 5, max length 400, required field, add text index
-  subtitle: type string, min length 5, not required field,
-  description: type string, min length 5, max length 5000, required,
-  owner: user reference, required field,
-  category: valid options [sport, games, history], required
-  createdAt: type datetime, required field
-  updatedAt: type datetime, required field
-}
-```
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/articles (POST)**, I want to create new article,
-so that I can have possibility to find it in mongodb articles collection. 
-Before creating new article, you should check if owner exist. 
-(Don't forget that all your articles should have reference to specific user - ***owner*** field, and also after creating new article, increment ***numberOfArticles*** field for that user)
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/articles/:articleId (PUT)**, I want to have possibility
-to edit any article document. Before you make update action, you should always check if article / user exist, and only
-after that start updating document.
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/articles (GET)**,
-I want to have possibility to search for articles using next filters **title, subtitle, description, owner, category,
-createdAt, updatedAt**. If I request endpoint without setting filter criteria, I should get all articles from database.
-(Also you should populate owner field)
-
-* Using [Postman](https://www.getpostman.com/), and api endpoint **/articles/:articleId (DELETE)**,
-I want to have possibility to delete any article from database. (Don't forget to decrement ***numberOfArticles*** field for user that created this article)
-
-
-
+#### 2. User will call PUT /articles/:articleId - to update existing article
+  - Check if article exist
+  - Update article document
+#### 3. User will call GET /articles - to get all articles
+  - User will have possibility to sort articles
+  - User will have possibility to filter articles
+  - User will have possibility to use pagination
+  - Populate owner of the article
+#### 4. User will call DELETE /articles/:articleId - to delete existing article
+  - Check if article exist
+  - Delete article
+  
+#### Extra
+  - Create end-point that will retriwe articles for specific user
+  - Create end-point that will remove all articles for specific user
+  
+#### Postman
+- We will use postman as a request emulator, back-end url http://localhost:port/api/
 
