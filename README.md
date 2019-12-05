@@ -13,8 +13,7 @@ git clone https://github.com/vdanyliv/mongo-workshop/
 cd mongo-workshop
 cp .env.example .env
 npm install
-npm run init-users
-npm run server
+npm start
 ```
 ### Workshop plan
 Lets try to implement possibility to create users articles, for that we need to implement CRUD operations.
