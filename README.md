@@ -9,7 +9,7 @@
 
 ### Installation 
 ``` 
-git clone https://github.com/vdanyliv/mongo-workshop/
+git clone https://github.com/vdanyliv/mongoose-workshop
 cd mongoose-workshop
 npm install
 npm start
