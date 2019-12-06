@@ -10,8 +10,7 @@
 ### Installation 
 ``` 
 git clone https://github.com/vdanyliv/mongo-workshop/
-cd mongo-workshop
-cp .env.example .env
+cd mongoose-workshop
 npm install
 npm start
 ```
