@@ -7,7 +7,7 @@ const app = express();
 
 
 const mongoose = require('mongoose');
-const dev_db_url = 'mongodb://localhost/tc-mongo-homework';
+const dev_db_url = 'mongodb://localhost/local';
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 mongoose.connect(mongoDB);
