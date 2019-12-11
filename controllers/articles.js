@@ -7,9 +7,7 @@ async function createArticle(req, res, next) {
   const {body} = req;
 
   try{
- 
     const user = await userModel.findOne({_id: body.owner});
-
     if(!user) throw new Error('user doesnt exist');
 
     const article = await articleModel.create(body);
@@ -37,6 +35,7 @@ async function getArticle(req,res,next) {
 
 async function updateArticle(req,res,next) {
   const id = req.params.id;
+
   try{
     const article = await articleModel.findOne({_id: id}).populate('owner');
     if(!article) throw new Error('this article doesnt exist');
@@ -57,10 +56,13 @@ async function updateArticle(req,res,next) {
 
 async function deleteArticle(req,res,next) {
   const id = req.params.id;
+
   try{
     const article = await articleModel.findOne({_id: id}).populate('owner');
+    
     const deletedArticle = await articleModel.deleteOne(article);
     const user = await userModel.updateOne(article.owner, {$inc: {numberOfArticles: -1}});
+
     return res.json({work: true});
   }
   catch(err) {
